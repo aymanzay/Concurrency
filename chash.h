@@ -1,18 +1,22 @@
 #include "clist.h"
 
 #pragma once
-#include<vector>
+#include <vector>
 
 /// TODO: complete this implementation of a thread-safe (concurrent) hash
-///       table of integers, implemented as an array of linked lists.
+/// table of integers, implemented as an array of linked lists.
 class chash
 {
 	/// The bucket list
 	const std::vector<clist> buckets;
+	int size;
 
 public:
 	chash(unsigned _buckets)
-	{}
+	{
+		size = _buckets;
+		//buckets = new 
+	}
 
 	/// insert *key* into the appropriate linked list if it doesn't already
 	/// exist; return true if the key was added successfully.

@@ -17,32 +17,57 @@ Task #0: Tell us who you are
 
 Notes, Warnings:
 
-  Do not ask the professor(s) about how you should manipulate the parameters for testing. You are expected to have some understanding of how the changes should impact the performance of your code. This applies for the entire assignment. Being able to analyze and anticipate expected results due to your changes is an important skill.
+  Do not ask the professor(s) about how you should manipulate the parameters for testing. 
+  You are expected to have some understanding of how the changes should impact the performance 
+  of your code. This applies for the entire assignment. Being able to analyze and anticipate expected results due to
+  your changes is an important skill.
 
-  The tester given does not check the integrity of your dataset, only the overall concurrency behavior. These will be tested in the final submission. You may modify bench.cc and multikeybench.cc in order to test the data integrity yourself, those files will not be part of your submission.
+  The tester given does not check the integrity of your dataset, 
+  only the overall concurrency behavior. These will be tested in the final submission. 
+  You may modify bench.cc and multikeybench.cc in order to test the data integrity yourself, 
+  those files will not be part of your submission.
 
-  There are some functions that are given under the pretense that they don't need to do anything but still exist. Do not edit those funcitons.
+  There are some functions that are given under the pretense that they don't need to do 
+  anything but still exist. Do not edit those funcitons.
 
 Task #1: Implement a simple lock-based sorted linked list (10 points)
 
-  Back in assignment #1, you built a "mylist" program, which could perform operations on a sorted linked list.  In this task, you will do something similar. You will create a concurrent list ("clist") that can perform insert, lookup, and remove operations on a sorted linked list containing integer values. However, now your list will be tested through a benchmark harness that executes multiple threads simultaneously.
+  Back in assignment #1, you built a "mylist" program, which could perform 
+  operations on a sorted linked list.  In this task, you will do something similar. 
+  You will create a concurrent list ("clist") that can perform insert, lookup, and 
+  remove operations on a sorted linked list containing integer values. 
+  However, now your list will be tested through a benchmark harness that executes 
+  multiple threads simultaneously.
 
-  To get this to work, you will need to use locks. Since we are using C++, you can use the std::mutex lock, instead of the more cumbersome pthread_mutex_t. If you do not understand why std::mutex is easier, you should definitely read about std::lock_guard, and think about how to return a value from a function when that function is protected by a lock.
+  To get this to work, you will need to use locks. Since we are using C++, you can use the 
+  std::mutex lock, instead of the more cumbersome pthread_mutex_t. If you do not understand
+  why std::mutex is easier, you should definitely read about std::lock_guard, and think about
+  how to return a value from a function when that function is protected by a lock.
 
-  Note: more threads != more throughput. Only one thread should be able to access your list at a time, so adding threads should not result in speedup. Also, be careful as you play with the parameters to the benchmark. Experiments with very large lists will take a very long time.
+  Note: more threads != more throughput. Only one thread should be able to access your list
+  at a time, so adding threads should not result in speedup. Also, be careful as you play with
+  the parameters to the benchmark. Experiments with very large lists will take a very long time.
 
 
 Task #2: Employ readers/writer locking to increase concurrency (10 points)
 
-  Next, let's try to create a concurrent sorted linked list that makes use of readers/writer locking. Although, readers/writer locking is part of C++17, you are not allowed to use it for this task. You'll need to regress to using pthread-style locks, and pthread_rwlock_t. See https://docs.oracle.com/cd/E19455-01/806-5257/6je9h032u/index.html for more information.
+  Next, let's try to create a concurrent sorted linked list that makes use of readers/writer locking. 
+  Although, readers/writer locking is part of C++17, you are not allowed to use it for this task. 
+  You'll need to regress to using pthread-style locks, and pthread_rwlock_t. See https://docs.oracle.com/cd/E19455-01/806-5257/6je9h032u/index.html for more information.
 
-  Using a readers/writer lock, you should be able to see some scalability for high read-only ratios and larger key ranges. However, there remains a limitation: any modification to the data structure requires mutual exclusion, and eschews all concurrency. This weakness will motivate our next task.
+  Using a readers/writer lock, you should be able to see some scalability for high read-only ratios and larger key ranges. 
+  However, there remains a limitation: any modification to the data structure requires mutual exclusion, and eschews all concurrency. 
+  This weakness will motivate our next task.
 
 Task #3: Use your clist to create a fixed-size chash (15 points)
 
-  This will be a very straightforward task: you will re-use your concurrent list as the building block for a concurrent hash table. Your hash table should consist of a fixed-size (but configurable) array of concurrent  lists, and your hash function need only do modular arithmetic on the integer key in order to choose a bucket.
+  This will be a very straightforward task: you will re-use your concurrent list as the building block
+  for a concurrent hash table. Your hash table should consist of a fixed-size (but configurable) 
+  array of concurrent  lists, and your hash function need only do modular arithmetic on the integer key in order to choose a bucket.
 
-  To test your hash, be sure to experiment with the parameters to the benchmark. Note, too, that you may not see the good speedup that you expect. This could be due to data structure design issues, or due to other users on the machine when you run tests.
+  To test your hash, be sure to experiment with the parameters to the benchmark. Note, too, 
+  that you may not see the good speedup that you expect. This could be due to data structure design issues, 
+  or due to other users on the machine when you run tests.
 
 Task #4: Create a more effective hash table using sentinel nodes (15 points)
 
