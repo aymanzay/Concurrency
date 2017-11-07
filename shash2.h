@@ -52,7 +52,6 @@ public:
 				head->value = keys[i];
 				results[i] = true;
 				s_node->mtx.lock();
-
 				if(head == NULL) {
 					results[i] = false;
 				}
@@ -64,10 +63,8 @@ public:
 			for(int j = 0; j < num; j++) {
 				temp2 = new Node;
 				s_node->mtx.lock();
-				printf("HELLO Insert\n");
 				temp2->value = keys[j];
 				results[j] = true;
-				
 				if(temp2 == NULL) {
 					results[j] = false;
 				}
@@ -91,17 +88,15 @@ public:
 		if(curr->next != NULL) {
 			while(curr != NULL) {
 				for(int i = 0; i < num; i++) {
+					s_node->mtx.lock();
 					if(curr->value == keys[i]) {
-						s_node->mtx.lock();
 						temp = curr;
 						curr = curr->next;
 						results[i] = true;
-						printf("REMOVE %d\n",temp->value);
-						s_node->mtx.unlock();
 					} else {
 						results[i] = false;
-						s_node->mtx.unlock();
 					}
+					s_node->mtx.unlock();
 				}
 				curr = curr->next;
 			}
@@ -115,27 +110,23 @@ public:
 	/// return true if *key* is present in the list, false otherwise
 	void lookup(int* keys, bool* results, int num)
 	{
-		Node* curr_node = new Node;
-		curr_node = curr;
 		curr = head;
-
-		while(curr != NULL) 
+		while(curr->next != NULL) 
 		{
-			printf("HERE Lookup %d and key is %d\n", curr->value, keys[num]);
-			for(int i = 0; i < num; i++) {
-				if(curr->value == keys[i]) {
-					s_node->mtx.lock();
-					temp = new Node;
-					temp->value = keys[i];
-					if(temp->value == keys[i]) {
-						results[i] = true;
-					} else {
-						results[i] = false;
-					}
-					s_node->mtx.unlock();
+			Node* temp3;
+			for(int i = 0; i < num; i++) 
+			{
+				temp3 = new Node;
+				s_node->mtx.lock();
+				results[i] = true;
+				temp3->value = keys[i];
+				if(temp3->value == keys[i]) {
+					results[i] = true;
+				} else {
+					results[i] = false;
 				}
+				s_node->mtx.unlock();
 			}
-			
 			curr = curr->next;
 		}
 	}

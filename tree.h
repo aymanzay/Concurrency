@@ -19,21 +19,28 @@ public:
 	Node* head;
 
 public:
-	tree(int)
-	: head(NULL)
-	{}
+	tree(int): head(NULL)
+	{
+
+	}
 
 	/// insert /num/ values from /data/ array into the tree, and return the
 	/// success/failure of each insert in /results/ array.
 	void insert(int* data, bool* results, int num)
-	{}
+	{
+
+	}
 	/// remove *data* from the list if it was present; return true if the data
 	/// was removed successfully.
 	void remove(int* data, bool* results, int num)
-	{}
+	{
+
+	}
 	/// return true if *data* is present in the list, false otherwise
 	void lookup(int* data, bool* results, int num) const
-	{}
+	{
+		
+	}
 
 	//The following are not tested by the given tester but are required for grading
 	//No locks are required for these.

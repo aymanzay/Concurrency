@@ -20,6 +20,8 @@
         "type_traits": "cpp",
         "initializer_list": "cpp",
         "string_view": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "__mutex_base": "cpp",
+        "__locale": "cpp"
     }
 }
