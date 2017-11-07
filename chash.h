@@ -8,33 +8,40 @@
 class chash
 {
 	/// The bucket list
-	const std::vector<clist> buckets;
 	int size;
+	//std::vector<clist> buckets;
+	clist** buckets;
 
 public:
 	chash(unsigned _buckets)
 	{
 		size = _buckets;
-		//buckets = new 
+		buckets = new clist*[size];
+		for(int i = 0; i < size; i++) {
+			buckets[i] = new clist(0);
+		}
 	}
 
 	/// insert *key* into the appropriate linked list if it doesn't already
 	/// exist; return true if the key was added successfully.
 	bool insert(int key)
 	{
-		return false;
+		int hash = key % size;
+		return buckets[hash]->insert(key);
 	}
 	/// remove *key* from the appropriate list if it was present; return true
 	/// if the key was removed successfully.
 	bool remove(int key)
 	{
-		return false;
+		int hash = key % size;
+		return buckets[hash]->remove(key);
 	}
 	/// return true if *key* is present in the appropriate list, false
 	/// otherwise
 	bool lookup(int key) const
 	{
-		return false;
+		int hash = key % size;
+		return buckets[hash]->lookup(key);
 	}
 
 	//The following are not tested by the given tester but are required for grading
@@ -53,8 +60,6 @@ public:
 	{
 		return 0;
 	}
-
-
 
 	//These functions just need to exist, they do not need to do anything
 	int getElement(size_t idx) const

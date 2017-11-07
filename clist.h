@@ -32,11 +32,11 @@ public:
 	bool insert(int key)
 	{
 		mtx.lock();
-		if(head == NULL) {
+		if(head == NULL) { /* If list is empty */
 			head = new Node;
 			head->value = key;
 			head->next = NULL;
-		} else {
+		} else { /* Add element into sorted list position */
 			curr = head;
 			temp = new Node;
 			temp->value = key;
